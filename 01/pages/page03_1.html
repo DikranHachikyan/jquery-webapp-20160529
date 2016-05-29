@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+</head>
+<body>
+	<div>
+		<h3 id="title">Millennium Monument</h3>
+		<a href="http://btv.bg" id="link">
+			<img src="../pics-large/pic2.jpg" alt="Millennium Monument" id="pic">
+		</a>
+		<p id="info">Lorem ipsum dolor sit amet, <strong>consectetur</strong> adipisicing elit. Iste veniam quis quam <em>numquam</em> ex, ipsam recusandae placeat officiis odio magnam provident tempora nemo sit nostrum voluptates libero, animi. Aliquid, ex?</p>
+	</div>
+	<div>
+		<input type="button" value="Previous" id="prev">
+		<input type="button" value="Next" id="nxt">
+	</div>
+	
+<script src="../js/jquery.min.js" ></script>
+<script src="../js/pictures.js"></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+		
+		var currentImage = 0;
+		var largePath = '../pics-large/';
+
+		$('#prev').click(function(evt){
+			console.log('Button Previous');
+			currentImage--;
+			if( currentImage < 0 )
+			{
+				currentImage =images.length - 1;
+			}
+			setImage( images[currentImage], largePath);
+
+		});//on click button Previous
+
+		$('#nxt').click(function(evt){
+			console.log('Button Next');
+			currentImage++;
+			if( currentImage >= images.length )
+			{
+				currentImage = 0;
+			}
+			
+			setImage( images[currentImage], largePath);
+		});//on click button Next
+	});//document ready
+
+	//--------------------------------------
+	function setImage(imageData, path)
+	{	
+		$('#title').html(imageData.title);
+		$('#link').attr({
+				'href':imageData.url,
+				'title':imageData.title
+		}); //hyper link
+		$('#pic').attr({
+			'src':path + imageData.src,
+			'alt':imageData.title
+		});//imageData tag
+		$('#info').html(imageData.info);	
+	}
+</script>	
+</body>
+</html>

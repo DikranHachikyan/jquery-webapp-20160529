@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+</head>
+<body>
+	<a href="#">
+		<img src="../pics-large/pic1.jpg" alt="">
+	</a>
+<script src="../js/jquery.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+
+		var pics = ['pic1.jpg', 'pic3.jpg', 'pic2.jpg', 'pic5.jpg', 'pic4.jpg'];
+		var currentImage = 0;
+		var imgPath = '../pics-large/';
+
+		window.setInterval( function(){
+
+			currentImage++;
+			//Проверка дали сме достигнали края на масива
+			if( currentImage >= pics.length )
+			{
+				currentImage = 0;
+			}
+			//Сменяме картинката
+			$('img').attr('src', imgPath + pics[ currentImage ] );
+
+		}, 2000 );
+
+	});//document ready
+</script>	
+</body>
+</html>
