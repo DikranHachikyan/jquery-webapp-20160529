@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+	<style>
+		.active{
+			font-weight: bold;
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+		<ul id="list">
+			<li>Lorem ipsum dolor sit amet</li>
+			<li class="active">Qui rem impedit enim sed illo</li>
+			<li>Esse velit modi aut corrupti</li>
+			<li>Consequuntur exercitationem sit</li>
+		</ul>
+	
+
+<script src="../js/jquery.min.js" ></script>
+<script src="../js/pictures.js"></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+	
+		$('#list li').each( function(index){
+			if( ! $(this).hasClass('active') )
+			{
+				$(this).attr('style','color:red');
+			}
+			//
+		});//for each item in #list
+	});//document ready
+
+	
+</script>	
+</body>
+</html>

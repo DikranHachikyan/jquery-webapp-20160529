@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+</head>
+<body>
+    <div id="item">
+      <h3 id="title">City Center</h3>
+      <a href="#" id="link">
+        <img src="../pics-large/pic1.jpg" alt="" id="pic">
+      </a>
+      <p id="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, at, ea. Fuga iste pariatur voluptates odit harum nostrum atque nihil blanditiis minus repudiandae, expedita aut, doloribus reiciendis, amet voluptate consequatur!</p>
+  </div>
+	
+<script src="../js/jquery.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+		var image = {
+      			"url": "http://btv.bg",
+      			"src": "../pics-large/pic2.jpg",
+      			"thumbnail": "../pics-small/pic2.jpg",
+      			"title": "Millennium Monument",
+      			"alt": "Millennium Monument",
+      			"info": "Lorem ipsum dolor sit amet, <strong>consectetur</strong> adipisicing elit. Iste veniam quis quam <em>numquam</em> ex, ipsam recusandae placeat officiis odio magnam provident tempora nemo sit nostrum voluptates libero, animi. Aliquid, ex?"
+    		};
+
+        $.each( image , function(key, value){
+            if( key === 'url')
+            {
+              $('#item').find('#link').attr('href', value);
+            }
+            else if( key === 'src')
+            {
+              $('#item').find('#pic').attr('src', value);
+            }
+            else if( key === 'title')
+            {
+              $('#item').find('#title').html(value);
+            }
+            else if(key === 'info')
+            {
+              $('#item').find('#info').html(value);
+            }
+            else if( key === 'alt')
+            {
+              $('#item').attr('alt',value);
+            }
+        }); //for each key in object image
+    
+
+	});//document ready
+</script>	
+</body>
+</html>

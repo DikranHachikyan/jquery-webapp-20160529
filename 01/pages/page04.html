@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+</head>
+<body>
+		<ul id="list"></ul>
+	
+
+<script src="../js/jquery.min.js" ></script>
+<script src="../js/pictures.js"></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+		var titles = [
+			'Lorem ipsum dolor sit amet',
+			'Qui rem impedit enim sed illo',
+			'Esse velit modi aut corrupti',
+			'Consequuntur exercitationem sit',
+			'Quasi harum deleniti dolore dignissimos'
+		];
+
+		$.each( titles, function(index, value){
+			$('#list').append('<li>'+value+'</li>');
+		});// for each title in titles
+
+		$('#list li').each( function(index){
+			$(this).attr('style','color:red');
+		});//for each item in #list
+
+		//$('#list li').attr('style','color:red');
+	});//document ready
+
+	
+</script>	
+</body>
+</html>

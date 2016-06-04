@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+</head>
+<body>
+  <ul id='list'></ul>
+	
+<script src="../js/jquery.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+		var image = {
+      			"url": "http://btv.bg",
+      			"src": "../pics-large/pic2.jpg",
+      			"thumbnail": "../pics-small/pic2.jpg",
+      			"title": "Millennium Monument",
+      			"alt": "Millennium Monument",
+      			"info": "Lorem ipsum dolor sit amet, <strong>consectetur</strong> adipisicing elit. Iste veniam quis quam <em>numquam</em> ex, ipsam recusandae placeat officiis odio magnam provident tempora nemo sit nostrum voluptates libero, animi. Aliquid, ex?"
+    		};
+
+        $.each( image , function(key, value){
+            $('#list').append('<li><strong>Key:</strong>' + key + ', <strong>Value:</strong>'+value+'</li>');
+        }); //for each key in object image
+    
+
+	});//document ready
+</script>	
+</body>
+</html>
