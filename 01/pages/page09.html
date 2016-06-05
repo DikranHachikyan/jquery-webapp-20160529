@@ -9,29 +9,24 @@
     ul li+li{
       display: none;
     }
-
-    #buttons {
-      display: none;
-    }
   </style>
 </head>
 <body>
-    <ul id="gallery">
-      <li>
-          <h3>City Center</h3>
-          <a href="#">
-            <img src="../pics-large/pic1.jpg" alt="">
-          </a>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, at, ea.</p>
-      </li>
+  <ul id="gallery">
+
   </ul>
-  <div id="buttons">
-    <button  id="prv">Previous</button>
-    <button  id="nxt">Next</button>
+  <button  id="prv">Previous</button>
+	<button  id="nxt">Next</button>
+  
+  <div id="template" style="display:none">
+     <li>
+          <h3></h3>
+          <a href="#">
+            <img src="" alt="">
+          </a>
+          <p></p>
+      </li>
   </div>
-  <noscript>
-    За да разгледате галерията, трябва да разрешите JS.
-  </noscript>
 <script src="../js/jquery.min.js" ></script>
 <script src="../js/pictures.js" ></script>
 <script>
@@ -40,7 +35,7 @@
 		var path='../pics-large/';
 
     $.each( images , function(index, item){
-        var $li = $('#gallery li:first-child').clone();
+        var $li = $('#template li').clone();
 
         $li.find('h3').html(item.title);
         $li.find('img').attr({'src': path + item.src, 'alt':item.alt});
@@ -50,8 +45,6 @@
         $('#gallery').append($li);
     }); //for each key in object image
     
-    $('#buttons').slideToggle();
-
     $('#nxt').click(function(evt){
         $('#gallery li:first-child').appendTo( $('#gallery') );
     });//on click button next

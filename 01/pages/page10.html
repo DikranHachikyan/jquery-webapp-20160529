@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+  <style>
+    ul{ list-style: none; }
+
+    ul li+li{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <ul id="gallery"></ul>
+
+  <button  id="prv">Previous</button>
+	<button  id="nxt">Next</button>
+  
+  <div id="template" style="display:none">
+     <li><h3></h3><a href="#"><img src="" alt=""></a><p></p></li>
+  </div>
+<script src="../js/jquery.min.js" async="false" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+		var path='../pics-large/';
+
+    console.log('before get');
+    $.get('../js/pictures-ajax.json', 
+          function(data,status){
+            console.log('begin success callback');
+            $.each( data , function(index,item){
+              var $li = $('#template li').clone();
+
+              $li.find('h3').html(item.title);
+              $li.find('img').attr({'src': path + item.src, 'alt':item.alt});
+              $li.find('a').attr('href',item.url);
+              $li.find('p').html(item.info);
+
+              $('#gallery').append($li);
+            }); //for each key in object image     
+            //тук няма проблем, li са в ul      
+            $('#gallery li').addClass('list-item');
+            console.log('end success callback');
+    });//get json data
+    console.log('after get');
+    //когато се изпълнява този код, li не са налични в ul
+    //$('#gallery li').addClass('list-item');
+
+    $('#nxt').click(function(evt){
+        $('#gallery li:first-child').appendTo( $('#gallery') );
+    });//on click button next
+
+    $('#prv').click(function(evt){
+       $('#gallery li:last-child').prependTo( $('#gallery') );
+    }); //on click button previous
+  
+	});//document ready
+</script>	
+</body>
+</html>

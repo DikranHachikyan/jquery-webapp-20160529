@@ -1,4 +1,4 @@
-var images = [
+[
     {
       "url": "http://btv.bg",
       "src": "pic2.jpg",
@@ -38,6 +38,5 @@ var images = [
       "title": "Hagley Park",
       "alt": "Hagley Park",
       "info": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum reiciendis atque, nobis mollitia autem aliquid earum eligendi aperiam explicabo rerum obcaecati, blanditiis. Porro minima aspernatur atque possimus commodi esse consequuntur!"
-    }
-  
-];
+    } 
+]

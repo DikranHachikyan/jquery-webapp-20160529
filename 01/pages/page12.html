@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="recent-posts"></div>
+
+  
+  <div id="template" style="display:none">
+     <article>
+       <header>
+          <h2></h2>  
+       </header>
+       <section>
+         <p></p>
+       </section>
+       <footer>
+          <a href="#">Read More</a>
+       </footer>
+     </article>
+  </div>
+<script src="../js/jquery.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+
+    $.get('http://devise-expert.co.uk/?json=get_recent_posts',
+          function(data,status){
+             //console.log('data:',data);
+             $.each(data.posts, function(index, post) {
+                var $article = $('#template article').clone();
+
+                $article.find('header h2').html(post.title_plain);
+                //премахваме параграфа и линк към статията от excerpt
+                //var $tmp = $('<p>Hello World</p>');
+                var $tmp = $(post.excerpt);//това създава div етикет
+                //$tmp.html();
+                $tmp.find('a').remove();
+                var excerpt = $tmp.html();
+                //------ до тук ------------------------------------
+                $article.find('section p').html(excerpt);
+
+                $('#recent-posts').append($article);
+             }); //for each post in recent posts
+    });//get recent posts
+		
+	});//document ready
+
+</script>	
+</body>
+</html>

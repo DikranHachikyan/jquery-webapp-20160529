@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+  <style>
+    ul{ list-style: none; }
+
+    ul li+li{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <ul id="gallery"></ul>
+
+  <button  id="prv">Previous</button>
+	<button  id="nxt">Next</button>
+  
+  <div id="template" style="display:none">
+     <li><h3></h3><a href="#"><img src="" alt=""></a><p></p></li>
+  </div>
+<script src="../js/jquery.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+		var path='../pics-large/';
+
+    console.log('before get');
+    $.get('../js/pictures-ajax.json', 
+          function(data,status){
+            console.log('---begin success callback ');
+            //тук правим други неща   
+            console.log('---end success callback');
+    });//get json data
+    console.log('after get');
+    
+    console.log('before foo');
+    foo();
+    console.log('after foo');
+	});//document ready
+
+  function foo()
+  {
+    console.log('---begin foo');
+    //тук правим други неща   
+    console.log('---end foo');
+  }
+</script>	
+</body>
+</html>
