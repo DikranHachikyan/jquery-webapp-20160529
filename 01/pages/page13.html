@@ -3,29 +3,46 @@
 <head>
 	<meta charset="UTF-8">
 	<title>jQuery Examples</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap-theme.min.css">
   <style>
-
+    .img-responsive{
+      max-width: 300px;
+      max-height: 200px;
+    }
   </style>
 </head>
 <body>
-  <div id="recent-posts"></div>
+<div>
+  <div class="visible-xs">Extra Small</div>
+  <div class="visible-sm">Small</div>
+  <div class="visible-md">Middle</div>
+  <div class="visible-lg">Large</div>
+</div>
+  <h1>My Blog <span class="glyphicon glyphicon-bell"></span></h1>
+  <div class="container-fluid">
+    <div id="recent-posts" class="row">
+      
+    </div>
+  </div>
 
   
   <div id="template" style="display:none">
-     <article>
+     <article class="col-sm-6 col-md-4">
        <header>
-          <h2></h2>
-          <img src="" alt="">  
+          <h4></h4>
+          <img src="" alt="" class="img-thumbnail img-responsive">  
        </header>
        <section>
          <p></p>
        </section>
        <footer>
-          <a href="#">Read More</a>
+          <a href="#" class="btn btn-primary">Read More</a>
        </footer>
      </article>
   </div>
-<script src="../js/jquery.min.js" ></script>
+<script src="../assets/js/jquery.min.js" ></script>
+<script src="../assets/js/bootstrap.min.js" ></script>
 <script>
 	$(document).ready(function(){
 		console.log('jQuery ready');
@@ -33,10 +50,11 @@
     $.get('http://devise-expert.co.uk/?json=get_recent_posts',
           function(data,status){
              //console.log('data:',data);
+             var counter = 0;
              $.each(data.posts, function(index, post) {
                 var $article = $('#template article').clone();
 
-                $article.find('header h2').html(post.title_plain);
+                $article.find('header h4').html(post.title_plain);
                 //премахваме параграфа и линк към статията от excerpt
                 //var $tmp = $('<p>Hello World</p>');
                 var $tmp = $(post.excerpt);//това създава div етикет
@@ -56,6 +74,18 @@
                 $article.find('header img').attr({'src': imageSrc , 'alt': post.title}); 
 
                 $('#recent-posts').append($article);
+                
+                counter++;
+                //3 6 9 12 ....
+                if( counter != 0 && (counter % 3) == 0 )
+                {
+                  $('#recent-posts').append('<div class="clearfix visible-md visible-lg"></div>');
+                }
+                //2 4 6 8 10 12 ....
+                if( counter !=0 && (counter %2) == 0 )
+                {
+                  $('#recent-posts').append('<div class="clearfix visible-sm"></div>');
+                } 
              }); //for each post in recent posts
     });//get recent posts
 		
