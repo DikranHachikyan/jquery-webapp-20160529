@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap-theme.min.css">
+  <style>
+    .img-responsive{
+      max-width: 300px;
+      max-height: 200px;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <div class="visible-xs">Extra Small</div>
+  <div class="visible-sm">Small</div>
+  <div class="visible-md">Middle</div>
+  <div class="visible-lg">Large</div>
+</div>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>My Blog <span class="glyphicon glyphicon-bell"></span></h1>
+        <ul class="nav nav-pills">
+          <li role="presentation" class="active"><a href="#" id="home">Home</a></li>
+          <li role="presentation"><a href="#">Profile</a></li>
+          <li role="presentation"><a href="#">Messages</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content" class="row"></div>
+    <div id="post" class="row"></div>
+  </div>
+
+  
+  <div id="template" style="display:none">
+     <article class="col-sm-6 col-md-4">
+       <header>
+          <h4></h4>
+          <img src="" alt="" class="img-thumbnail img-responsive">  
+       </header>
+       <section>
+         <p></p>
+       </section>
+       <footer>
+          <a href="#post" class="btn btn-primary" data-post-id="" >Read More</a>
+       </footer>
+     </article>
+  </div>
+<script src="../assets/js/jquery.min.js" ></script>
+<script src="../assets/js/bootstrap.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+      $('#home').click(getRecentPosts);
+    
+      getRecentPosts();
+		
+	});//document ready
+
+  //-----------------------------------------------------
+  function loadPostContent( evt )
+  {
+    var pid = $(this).data('post-id');
+    console.log('loadPostContent:', pid);
+    $.get('http://devise-expert.co.uk/?json=get_post&post_id=' + pid,
+          function(data,status){
+            $('#post').html(data.post.content);  
+    });
+    //evt.preventDefault();
+  }
+  //----------------------------------------------------------
+  function getRecentPosts(evt){
+    $('#content').empty();
+    $.get('http://devise-expert.co.uk/?json=get_recent_posts',
+          function(data,status){
+             //console.log('data:',data);
+             var counter = 0;
+             $.each(data.posts, function(index, post) {
+                var $article = $('#template article').clone();
+
+                $article.find('header h4').html(post.title_plain);
+                //премахваме параграфа и линк към статията от excerpt
+                //var $tmp = $('<p>Hello World</p>');
+                var $tmp = $(post.excerpt);//това създава div етикет
+                //$tmp.html();
+                $tmp.find('a').remove();
+                var excerpt = $tmp.html();
+                //------ до тук ------------------------------------
+                $article.find('section p').html(excerpt);
+
+                var imageSrc = '../pics-large/pic1.jpg';
+
+                if( post.thumbnail )
+                {
+                  imageSrc = post.thumbnail;
+                }
+
+                $article.find('header img').attr({'src': imageSrc , 'alt': post.title}); 
+                $article.find('footer a')
+                  .data('post-id', post.id)
+                  .click( loadPostContent );
+
+                //console.log('post-id=', $article.find('footer a').data('post-id'));
+                $('#content').append($article);
+                
+                counter++;
+                //3 6 9 12 ....
+                if( counter != 0 && (counter % 3) == 0 )
+                {
+                  $('#content').append('<div class="clearfix visible-md visible-lg"></div>');
+                }
+                //2 4 6 8 10 12 ....
+                if( counter !=0 && (counter %2) == 0 )
+                {
+                  $('#content').append('<div class="clearfix visible-sm"></div>');
+                } 
+             }); //for each post in recent posts
+
+             if( typeof evt != 'undefined' )
+             {
+                evt.preventDefault(); 
+             }
+             
+    });//get recent posts
+  }
+</script>	
+</body>
+</html>

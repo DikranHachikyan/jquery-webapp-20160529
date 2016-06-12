@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Examples</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap-theme.min.css">
+  <style>
+    .img-responsive{
+      max-width: 300px;
+      max-height: 200px;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <div class="visible-xs">Extra Small</div>
+  <div class="visible-sm">Small</div>
+  <div class="visible-md">Middle</div>
+  <div class="visible-lg">Large</div>
+</div>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>My Blog <span class="glyphicon glyphicon-bell"></span></h1>
+        <ul class="nav nav-pills">
+          <li role="presentation" class="active"><a href="#" id="home">Home</a></li>
+          <li role="presentation"><a href="#">Profile</a></li>
+          <li role="presentation"><a href="#">Messages</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content" class="row"></div>
+    <div id="post" class="row"></div>
+  </div>
+
+<script src="../assets/js/jquery.min.js" ></script>
+<script src="../assets/js/bootstrap.min.js" ></script>
+<script>
+	$(document).ready(function(){
+		console.log('jQuery ready');
+   });
+  //----------------------------------------------------------------
+  function loadRecentPosts(dataJSON)
+  {
+      $.get('partials/post-thumbnail.html', 
+             function(dataHtml , status){
+             var counter=0; 
+             $.each( dataJSON.posts , function( index, post){
+                //клонираме хтмл
+                var $article = $(dataHtml).clone();
+                //намираме заглваната част
+                $article.find('header h4').html(post.title_plain);
+                //махаме хипервръзките от excerpt
+                var $tmp = $(post.excerpt);
+                $tmp.find('a').remove();
+                $article.find('section p').html( $tmp.html() );
+                //картинка от публикацията или подразбиращата се
+                var imgSrc = '../pics-large/pic1.jpg';
+                if( typeof post.thumbnail != 'undefined')
+                {
+                  imgSrc = post.thumbnail;
+                }
+                $article.find('header img').attr({
+                    'src':imgSrc,
+                    'alt':post.title_plain
+                });
+                //бутона за четене на статията
+
+                //добавяме статията в #content
+                $article.appendTo('#content');
+                //слагаме div clearfix
+                counter++;
+                //3,6,9,12,....
+                if( counter != 0 && (counter % 3) == 0)
+                {
+                  $('#content').append('<div class="clearfix visible-md visible-lg"></div>');
+                }
+
+                //2,4,6,8,10
+                if( counter != 0 && (counter % 2) == 0 )
+                {
+                 $('#content').append('<div class="clearfix visible-sm"></div>'); 
+                }
+             });//for each post in posts 
+            console.log('end get template'); 
+      });//get template from file
+      console.log('end load recent posts')
+  }//load recent posts
+</script>
+<!-- етикета трябва да е след декларацията на функцията -->
+<script src="http://devise-expert.co.uk/?json=get_recent_posts&callback=loadRecentPosts"></script>	
+</body>
+</html>
